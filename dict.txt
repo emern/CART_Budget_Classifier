@@ -1,0 +1,1 @@
+{'Gas': 0, 'Gifts': 1, 'Food': 2, 'School': 3, 'House': 4, 'Dates': 5, 'Work': 6, 'Trips': 7, 'Online': 8, 'Clothes': 9, 'Projects': 10, 'Other' :11, 'Auto':12}
