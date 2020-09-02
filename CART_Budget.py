@@ -66,6 +66,17 @@ def preprocess_CC(CC_data, bank):
     CC_data = CC.drop_duplicates(inplace = False)
     CC_data.sort_values('Date')
     CC_data = CC_data.drop(CC_data.loc[(CC_data['Trans_Type'].str.contains("PAYMENT - THANK YOU"))].index) #remove my credit card payments
+    try:
+        returns = CC_data.loc[(CC_data['Trans_Type'].str.contains("CREDIT VOUCHER/RETURN"))].index #find and append all credit card returns to income csv
+        print(returns)
+        r_a = returns["Amount"]
+        r_d = returns["Date"]
+        r_t = returns["Trans_Type"]
+        r = pd.concat([r_d, r_t, r_a]).reset_index(drop = True)
+        r.to_csv(r'your income csv here.csv', mode='a', header=False, index=False)
+    except:
+        pass
+    CC_data = CC_data.drop(CC_data.loc[(CC_data['Trans_Type'].str.contains("CREDIT VOUCHER/RETURN"))].index)
     CC_data['Label'] = CC_data['Label'].map(dictionary) #map labels
     CC_data['Trans_Type'] = CC_data['Trans_Type'].str.strip()
     CC_data['Amount'] = abs(CC_data['Amount'])
